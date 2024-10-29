@@ -1,0 +1,10 @@
+personal_financial_dashboard/
+├── app.py                 # Main Flask application
+├── config.py              # Configuration file for API keys and settings
+├── templates/
+│   └── index.html         # HTML template for the main dashboard
+├── static/
+│   └── style.css          # CSS styling for the frontend
+├── finance_data.py        # Logic for data processing and analysis
+├── requirements.txt       # Dependencies file
+└── README.md              # Project readme

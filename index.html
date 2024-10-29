@@ -1,0 +1,49 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Financial Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Personal Financial Dashboard</h1>
+        <button id="fetch-transactions">Fetch Transactions</button>
+        
+        <div id="total-spent">
+            <h2>Total Spent: $<span id="total-spent-value"></span></h2>
+        </div>
+
+        <canvas id="categoryChart" width="400" height="400"></canvas>
+    </div>
+
+    <script>
+        document.getElementById('fetch-transactions').addEventListener('click', async () => {
+            const response = await fetch('/transactions?access_token=your_access_token');
+            const data = await response.json();
+            
+            document.getElementById('total-spent-value').innerText = data.data.total_spent;
+            
+            const categorySummary = data.data.category_summary;
+            const labels = categorySummary.map(item => item.category);
+            const values = categorySummary.map(item => item.amount);
+
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Spending by Category',
+                        data: values,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+</html>

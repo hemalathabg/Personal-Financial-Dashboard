@@ -1,0 +1,1 @@
+pip install flask plaid sqlite3 pandas
